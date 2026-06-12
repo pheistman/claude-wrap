@@ -85,7 +85,24 @@ Surgical edits only — do not restructure, reformat, or rewrite existing conten
 
 ---
 
-## Phase 3: Update the task tracker (if found in Phase 0)
+## Phase 3: Declutter agent files
+
+Scan CLAUDE.md (and any `.claude/` instruction files found in Phase 0) for content that is safe to remove. **Be conservative** — only act on high-confidence cases. When in doubt, flag rather than delete.
+
+**Auto-remove (no user confirmation needed):**
+- Exact duplicate lines or paragraphs within the same file
+- An instruction that is explicitly superseded by a newer one in the same file (e.g., an old model ID replaced on the next line by a newer one)
+
+**Flag in the Phase 9 report, do not auto-remove:**
+- References to tasks, branches, or projects that appear completed or closed (user may want the record)
+- Instructions that look redundant with another but differ subtly in wording — list both so the user can decide
+- Any instruction added in a prior session whose rationale is no longer visible
+
+Make edits surgically with Edit, preserving all other content. If nothing qualifies for either category, skip this phase silently.
+
+---
+
+## Phase 4: Update the task tracker (if found in Phase 0)
 
 - Tick off completed items
 - Add new items with owner and deadline where known
@@ -94,7 +111,7 @@ Surgical edits only — do not restructure, reformat, or rewrite existing conten
 
 ---
 
-## Phase 4: Update memory
+## Phase 5: Update memory
 
 Memory lives at `~/.claude/projects/<encoded-path>/memory/`.
 
@@ -124,7 +141,7 @@ Before creating a new memory, check whether an existing one already covers it �
 
 ---
 
-## Phase 5: Log technical debt (code projects only)
+## Phase 6: Log technical debt (code projects only)
 
 Skip this phase entirely if the project contains no source code (e.g. document-only, legal, personal records).
 
@@ -139,7 +156,7 @@ Add these to the task tracker (if one exists) or append a `### Technical debt` s
 
 ---
 
-## Phase 6: Surface automation opportunities
+## Phase 7: Surface automation opportunities
 
 Review the current session context for repeated manual sequences — any multi-step task performed two or more times, or that the user explicitly described as recurring ("I always...", "every time I...", "we do this each session").
 
@@ -153,12 +170,12 @@ Review the current session context for repeated manual sequences — any multi-s
 **Draft one artifact only** — highest-ROI candidate — to `_drafts/<slug>.md`. Open with a single comment line: what it automates and the estimated sessions-saved.
 
 **Cross-session memory:**
-- Check existing memory for `feedback_pattern_*.md` matching this pattern. If found, this is a confirmed recurrence — note it as high priority in the Phase 8 report.
+- Check existing memory for `feedback_pattern_*.md` matching this pattern. If found, this is a confirmed recurrence — note it as high priority in the Phase 9 report.
 - If this is the first sighting, write `~/.claude/projects/<encoded-cwd>/memory/feedback_pattern_<slug>.md` recording: the pattern, today's date, and which artifact type would address it. Next session confirms recurrence before a full draft is committed.
 
 ---
 
-## Phase 7: Commit to git
+## Phase 8: Commit to git
 
 Stage all changed tracked files and any new files created this session.
 
@@ -178,7 +195,7 @@ If the user passed an argument when invoking `/wrap`, incorporate it into the su
 
 ---
 
-## Phase 8: Report back
+## Phase 9: Report back
 
 One short paragraph covering:
 - What files were updated

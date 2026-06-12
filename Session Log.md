@@ -1,3 +1,19 @@
+## Session: 12 June 2026
+**Topics:** wrap skill, declutter phase, phase renumbering
+
+### What was accomplished
+- Designed and added Phase 3 (Declutter agent files) to SKILL.md
+- Established conservative declutter policy: auto-remove only exact duplicates and explicitly superseded content; flag ambiguous cases in the report rather than deleting
+- Renumbered all subsequent phases (old 3–8 → new 4–9) and updated all cross-references
+
+### Files created
+- *(none)*
+
+### Immediate next actions
+- [ ] Consider whether Phase 3 should also scan memory files for stale entries, not just CLAUDE.md
+
+---
+
 ## Session: 11 June 2026
 **Topics:** GitHub issue triage, claude-video contributions, long-video transcription
 
