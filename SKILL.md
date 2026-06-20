@@ -33,13 +33,13 @@ This file tells you what the project is, what's outstanding, and how it is struc
 
 Note the path — Phase 1 appends to wherever the log was found. If none exists, create `Session Log.md` at the project root in Phase 1.
 
-**3. Task tracker** — look for any file (case-insensitive) whose name contains: `tracker`, `action`, `todo`, `backlog`, or `tasks`. Note its path. If none found, skip Phase 3.
+**3. Task tracker** — look for any file (case-insensitive) whose name contains: `tracker`, `action`, `todo`, `backlog`, or `tasks`. Note its path. If none found, skip Phase 4.
 
 **4. Git state** — run `git status --short` and `git remote -v`. Note:
 - Whether a remote exists
 - Whether any staged/unstaged files suggest sensitive content (medical records, credentials, `.env` files, private keys, personal financial or legal records) that would make pushing unsafe
 
-**5. Memory index** — read `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` directly (cwd path components joined by `-`). This primes Phase 4 with what memories already exist so you update rather than duplicate.
+**5. Memory index** — read `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` directly (cwd path components joined by `-`). This primes Phase 5 with what memories already exist so you update rather than duplicate.
 
 ---
 

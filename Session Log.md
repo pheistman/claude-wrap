@@ -1,3 +1,22 @@
+## Session: 20 June 2026
+**Topics:** SKILL.md cross-reference audit, phase numbering bug fix
+
+### What was accomplished
+- Analyzed Phase 4's (task tracker) impact on token use and efficiency for projects without a tracker file; confirmed Phase 0's gate already prevents any wasted Read/Edit calls when no tracker exists
+- Found two stale cross-references left over from the 12 Jun renumbering: Phase 0 step 3 said "skip Phase 3" (should say "skip Phase 4"); Phase 0 step 5 said "primes Phase 4" (should say "primes Phase 5")
+- Fixed both references in SKILL.md
+
+### How key problems were solved
+- Stale cross-refs after renumbering → used `git log -p` on SKILL.md to confirm the 12 Jun commit's renumbering missed these two lines despite its message claiming "fixed all cross-references"; corrected both directly
+
+### New critical findings
+1. The 12 Jun 2026 phase renumbering (inserting Phase 3) left two stale "Phase N" references in Phase 0 — worth grepping for "Phase \d" across the whole file after any future renumbering, not just sections adjacent to the edit
+
+### Immediate next actions
+- [ ] Consider whether Phase 3 should also scan memory files for stale entries, not just CLAUDE.md (carried over from 12 Jun)
+
+---
+
 ## Session: 12 June 2026
 **Topics:** wrap skill, declutter phase, phase renumbering
 
