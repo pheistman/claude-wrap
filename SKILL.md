@@ -121,6 +121,13 @@ Memory lives at `~/.claude/projects/<encoded-path>/memory/`.
 - Write a new `reference_*.md` — if a significant external URL, credential, or resource was introduced
 - Update `MEMORY.md` — add one line per new file; update the hook for changed files
 
+**Staleness check (cheap pass):**
+- Use only the index already loaded in Phase 0 step 5 — do not open every memory file. Skim each one-line entry for anything this session's events directly contradict or supersede (e.g., a referenced branch was merged or deleted, a status the entry describes as "current" just changed, a fact the user corrected in passing).
+- Open the specific memory file only when its index line looks contradicted by something concrete from this session.
+- If confirmed stale with high confidence (the fact is now verifiably wrong) — update the memory file in place and note the change in the Phase 9 report.
+- If merely ambiguous (looks old, but you can't confirm it's wrong) — leave it and flag it in the Phase 9 report instead, same conservative bar as Phase 3. Never delete a memory file on a hunch.
+- Skip this step silently if nothing in the index looks contradicted.
+
 **Memory file format:**
 
     ---
@@ -200,5 +207,6 @@ If the user passed an argument when invoking `/wrap`, incorporate it into the su
 One short paragraph covering:
 - What files were updated
 - What was committed (hash) and whether it was pushed or kept local (and why)
-- Any automation opportunity drafted (Phase 6) — what it is and where the draft lives
+- Any automation opportunity drafted (Phase 7) — what it is and where the draft lives
+- Any items flagged for user review (Phase 3 declutter candidates, Phase 5 stale memory candidates) — list them so the user can decide
 - The single most important next action for the next session
