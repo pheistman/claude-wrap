@@ -47,7 +47,7 @@ Note the path — Phase 1 appends to wherever the log was found. If none exists,
 
 ## Phase 1: Update the session log
 
-If the log already has content, `Read` only its first ~20 lines (use the `limit` parameter) — enough to capture the existing top entry's heading as an anchor; do not read the whole file. Add a new entry at the **top** of the file (most recent first) using `Edit` to insert it directly above that anchor. Keep all existing entries intact below it, untouched and unread. If no log exists, create `Session Log.md` with this as the first entry.
+If the log already has content, `Read` only its first ~20 lines (use the `limit` parameter) — enough to capture the existing top entry's heading and the line immediately after it (e.g. its `**Topics:**` line); do not read the whole file. Anchor `Edit`'s `old_string` on both lines together, not the heading alone — identical headings recur in practice (e.g. multiple same-day "(continued)" entries), and a heading-only anchor can match more than once file-wide and fail. Insert the new entry directly above that anchor, keeping all existing entries intact below it, untouched and unread. If no log exists, create `Session Log.md` with this as the first entry.
 
 Use this structure — omit any section that has nothing to record:
 
