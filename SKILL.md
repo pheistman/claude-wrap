@@ -17,10 +17,12 @@ Perform end-of-session housekeeping for the current project. **Be decisive — d
 
 Run these in parallel before acting on anything.
 
-**1. Primary context file** — read the first match found, in this order:
+**1. Primary context file** — find the first match, in this order:
 - `CLAUDE.md`
 - `.claude/overview.md`
 - `README.md`
+
+If the match is `CLAUDE.md` and its full content is already visible in this conversation's auto-injected system reminder, and nothing has edited it earlier this session, skip the full read — issue a `Read` with `limit: 5` instead, just to satisfy the "must Read before Edit" tool gate that Phase 2/3 will need. Otherwise (the match is `.claude/overview.md` or `README.md`, CLAUDE.md isn't in the injected context, or it may have changed already this session) read it in full.
 
 This file tells you what the project is, what's outstanding, and how it is structured. If none exists, note that and skip steps that depend on it.
 
@@ -39,13 +41,13 @@ Note the path — Phase 1 appends to wherever the log was found. If none exists,
 - Whether a remote exists
 - Whether any staged/unstaged files suggest sensitive content (medical records, credentials, `.env` files, private keys, personal financial or legal records) that would make pushing unsafe
 
-**5. Memory index** — read `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` directly (cwd path components joined by `-`). This primes Phase 5 with what memories already exist so you update rather than duplicate.
+**5. Memory index** — `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` (cwd path components joined by `-`). If its content is already visible in this conversation's auto-injected system reminder, and nothing has edited it earlier this session, skip the full read — issue a `Read` with `limit: 5` instead, just to satisfy the "must Read before Edit" tool gate that Phase 5 will need. Otherwise read it in full. Either way, this primes Phase 5 with what memories already exist so you update rather than duplicate.
 
 ---
 
 ## Phase 1: Update the session log
 
-Add a new entry at the **top** of the file (most recent first). Keep all existing entries intact below it. If no log exists, create `Session Log.md` with this as the first entry.
+If the log already has content, `Read` only its first ~20 lines (use the `limit` parameter) — enough to capture the existing top entry's heading as an anchor; do not read the whole file. Add a new entry at the **top** of the file (most recent first) using `Edit` to insert it directly above that anchor. Keep all existing entries intact below it, untouched and unread. If no log exists, create `Session Log.md` with this as the first entry.
 
 Use this structure — omit any section that has nothing to record:
 
@@ -122,7 +124,7 @@ Memory lives at `~/.claude/projects/<encoded-path>/memory/`.
 - Update `MEMORY.md` — add one line per new file; update the hook for changed files
 
 **Staleness check (cheap pass):**
-- Use only the index already loaded in Phase 0 step 5 — do not open every memory file. Skim each one-line entry for anything this session's events directly contradict or supersede (e.g., a referenced branch was merged or deleted, a status the entry describes as "current" just changed, a fact the user corrected in passing).
+- Use the MEMORY.md index from Phase 0 step 5 (auto-injected content or fresh read, whichever applied) — do not open every memory file. Skim each one-line entry for anything this session's events directly contradict or supersede (e.g., a referenced branch was merged or deleted, a status the entry describes as "current" just changed, a fact the user corrected in passing).
 - Open the specific memory file only when its index line looks contradicted by something concrete from this session.
 - If confirmed stale with high confidence (the fact is now verifiably wrong) — update the memory file in place and note the change in the Phase 9 report.
 - If merely ambiguous (looks old, but you can't confirm it's wrong) — leave it and flag it in the Phase 9 report instead, same conservative bar as Phase 3. Never delete a memory file on a hunch.
